@@ -1,0 +1,461 @@
+border-top: 1px solid var(--border);
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+
+  .phase-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--highlight);
+    background: rgba(58,58,255,0.08);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .phase-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* Toggle phases */
+  .phase-toggle {
+    border-top: 1px solid var(--border);
+    padding: 0;
+  }
+  .phase-toggle summary {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.25rem 0; cursor: pointer;
+    list-style: none; user-select: none;
+  }
+  .phase-toggle summary::-webkit-details-marker { display: none; }
+  .phase-toggle summary::after {
+    content: '+'; margin-left: auto;
+    font-size: 1.2rem; font-weight: 300; color: var(--text-secondary);
+    transition: transform 0.3s;
+  }
+  .phase-toggle[open] summary::after {
+    content: '−';
+  }
+  .phase-toggle-body {
+    padding: 0 0 1.5rem 0;
+    animation: toggleOpen 0.3s ease;
+  }
+  @keyframes toggleOpen {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .phase-summary-metrics {
+    display: flex; gap: 1rem; margin-left: 0.5rem;
+  }
+  .phase-summary-metrics span {
+    font-size: 0.72rem; font-weight: 500;
+    padding: 0.2rem 0.6rem; border-radius: 4px;
+  }
+
+  .phase-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .phase-detail {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  .bench-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    margin: 1rem 0;
+    font-family: 'JetBrains Mono', 'DM Sans', monospace;
+  }
+
+  .bench-table th {
+    text-align: left;
+    font-weight: 500;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 2px solid var(--border);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .bench-table td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .bench-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .bench-table .model-name {
+    color: var(--text);
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+  }
+
+  .bench-table .highlight-row td {
+    background: rgba(58,58,255,0.04);
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .bench-table .highlight-row .model-name {
+    color: var(--highlight);
+  }
+
+  .metric-up {
+    color: var(--green);
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+  .metric-down {
+    color: var(--red);
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+
+  .issue-box {
+    background: #FEF3C7;
+    border-left: 3px solid #F59E0B;
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .issue-box strong {
+    color: #92400E;
+  }
+
+  .resolve-box {
+    background: #ECFDF5;
+    border-left: 3px solid var(--green);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .resolve-box strong {
+    color: #065F46;
+  }
+
+  .project-result {
+    background: var(--ink);
+    color: rgba(255,255,255,0.92);
+    padding: 2.2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-result::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0;
+    width: 3px; background: var(--result-accent, var(--highlight));
+  }
+  .project-result::after {
+    content: '';
+    position: absolute; top: -50%; right: -10%;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, var(--result-glow, rgba(67,56,202,0.18)) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .result-text h4 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.55rem;
+    font-weight: 400;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .result-text p {
+    font-size: 0.82rem;
+    opacity: 0.7;
+  }
+
+  .result-link {
+    color: #fff;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.6rem 1.5rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 100px;
+    transition: all 0.3s;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .result-link:hover {
+    background: #fff;
+    color: var(--text);
+  }
+
+  /* PUBLICATIONS */
+  .publications { padding-top: 8rem; padding-bottom: 8rem; max-width: 1200px; }
+  .pub-item {
+    display: grid; grid-template-columns: 80px 1fr auto;
+    gap: 2.5rem; align-items: start; padding: 2rem 0;
+    border-bottom: 1px solid var(--border); transition: all 0.3s;
+    text-decoration: none; color: inherit;
+  }
+  .pub-item:first-of-type { border-top: 1px solid var(--border); }
+  .pub-item:hover { padding-left: 1rem; }
+  .pub-year {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem; color: var(--text-secondary); padding-top: 0.15rem;
+  }
+  .pub-info h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.4rem; line-height: 1.4; }
+  .pub-info p { font-size: 0.82rem; color: var(--text-secondary); }
+  .pub-venue {
+    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--highlight); font-weight: 500; padding-top: 0.2rem; white-space: nowrap;
+  }
+  .pub-link-icon {
+    display: inline-block; margin-left: 0.5rem; font-size: 0.75rem;
+    opacity: 0; transform: translateX(-4px); transition: all 0.3s;
+  }
+  .pub-item:hover .pub-link-icon { opacity: 1; transform: translateX(0); }
+
+  /* EXPERIENCE */
+  .experience { padding-top: 8rem; padding-bottom: 8rem; max-width: 1200px; }
+  .exp-item {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 4rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border);
+  }
+  .exp-item:first-of-type { border-top: 1px solid var(--border); }
+  .exp-period { font-size: 0.82rem; color: var(--text-secondary); padding-top: 0.25rem; }
+  .exp-content h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.25rem; }
+  .exp-content .exp-org {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1rem; font-style: italic; color: var(--text-secondary); margin-bottom: 0.75rem;
+  }
+  .exp-content p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .exp-tags span {
+    font-size: 0.7rem; letter-spacing: 0.05em; padding: 0.35rem 0.85rem;
+    background: var(--tag-bg); border-radius: 100px; color: var(--text-secondary); font-weight: 400;
+  }
+
+  /* CONTACT */
+  .contact { padding-top: 8rem; padding-bottom: 10rem; max-width: 1200px; }
+  .contact-content { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
+  .contact-text h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem; font-weight: 400;
+    letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1.5rem;
+  }
+  .contact-text p { font-size: 0.95rem; color: var(--text-secondary); max-width: 380px; }
+  .contact-links { display: flex; flex-direction: column; gap: 1.25rem; justify-content: center; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    text-decoration: none; color: var(--text); font-size: 0.95rem;
+    padding: 1rem 1.5rem; border: 1px solid var(--border);
+    border-radius: 8px; transition: all 0.3s;
+  }
+  .contact-link:hover { border-color: var(--text); padding-left: 2rem; }
+  .contact-link-label {
+    font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-secondary); min-width: 60px;
+  }
+
+  footer {
+    padding: 2rem 3rem; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    section { padding: 0 1.5rem; }
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-stats { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1rem; }
+    .about-stats > div { padding-right: 0; }
+    .about-stats > div:not(:last-child)::after { display: none; }
+    .about-photo { max-width: 180px; }
+    .research-grid { grid-template-columns: 1fr; }
+    .pub-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .pub-venue { order: -1; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+    .contact-content { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    .hero h1 { font-size: 2.5rem; }
+    .project-header { flex-direction: column; }
+    .project-body { padding: 0 1.5rem 2rem; }
+    .project-header { padding: 2rem 1.5rem 1.5rem; }
+    .project-role { padding: 0 1.5rem; }
+    .project-result { padding: 1.5rem; flex-direction: column; text-align: center; }
+    .bench-table { font-size: 0.68rem; }
+    .bench-table th, .bench-table td { padding: 0.4rem 0.5rem; }
+    .phase-summary-metrics { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Deokgi Kim.</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#research">Research</a>
+    <a href="#projects">Projects</a>
+    <a href="#business">Business</a>
+    <a href="#randd">R&amp;D</a>
+    <a href="#publications">Publications</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero" id="hero">
+  <p class="hero-greeting">Hello, I'm 김덕기</p>
+  <h1>Building language AI<br>from data to deployment —<br><em>end to end</em>.</h1>
+  <p class="hero-desc">
+    에세이 창의성 자동 평가 연구(ACL·NAACL)로 출발해, 솔트룩스에서 한국어 특화 LLM 'Luxia' 시리즈를
+    데이터 설계·사전학습·정렬·평가·서빙 전 주기로 개발합니다. on-policy distillation에서 multi-teacher MOPD와
+    MoE 업사이클링까지 학습 전략을 확장하며, 법률·원자력·보험 등 도메인 특화 모델을 실서비스로 납품하는 NLP·LLM 엔지니어입니다.
+  </p>
+  <div class="hero-links">
+    <a href="#contact" class="primary">Contact Me</a>
+    <a href="#projects">Projects</a>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-label reveal">About</div>
+  <div class="about-grid">
+    <div class="about-photo reveal">
+      <img src="data:image/jpeg;base64,__IMAGE_69060__" alt="Deokgi Kim">
+    </div>
+    <div class="about-content">
+      <h2 class="reveal">Research that publishes,<br>models that ship.</h2>
+      <p class="lead reveal">
+        자연어를 이해하고 평가하는 AI를 연구하고, 제품으로 만듭니다. 논문으로 검증한 아이디어를 리더보드 1위와 도메인 SOTA로 증명해 왔습니다.
+      </p>
+      <div class="about-phase about-phase--academic reveal">
+        <div class="phase-eyebrow"><span class="dot"></span>Academic Research · 군산대 DI Lab</div>
+        <p>
+          군산대학교 소프트웨어학과 DI Lab에서 에세이 창의성 자동 평가(ACES)를 연구했습니다.
+          에세이 임베딩 공간의 클러스터 패턴을 활용한 자기지도학습 모델을 제안하여 ACL·NAACL에 논문을 발표했습니다.
+        </p>
+      </div>
+      <div class="about-phase about-phase--industry reveal">
+        <div class="phase-eyebrow"><span class="dot"></span>Industry · Saltlux AI Labs</div>
+        <p>
+          현재 솔트룩스 AI Labs에서 자체 LLM 'Luxia' 시리즈(1 → 2 → 2.5 → 3 → 3.5 → 4) 개발과
+          법률·교육·원자력·보험 등 산업 도메인 특화 LLM 솔루션 구축을 담당하고 있습니다.
+          gpt-oss-120b 기반 on-policy distillation(Luxia 3.5)에 이어, Luxia 4에서는 31B multi-teacher MOPD와
+          MoE 업사이클링을 병행하며 학습 전략을 확장하고 있습니다. 지식그래프·온톨로지 기반 국가 R&D 과제에도 참여하고 있습니다.
+        </p>
+      </div>
+      <div class="about-roles reveal">
+        <span class="about-role-tag">Data Engineering</span>
+        <span class="about-role-tag">SFT · DPO</span>
+        <span class="about-role-tag">Distillation</span>
+        <span class="about-role-tag">Domain Adaptation</span>
+        <span class="about-role-tag">Expert Evaluation</span>
+        <span class="about-role-tag">LLM Serving</span>
+      </div>
+      <div class="about-stats reveal">
+        <div>
+          <div class="stat-number">3+</div>
+          <div class="stat-label">Publications</div>
+        </div>
+        <div>
+          <div class="stat-number">5</div>
+          <div class="stat-label">Luxia Versions</div>
+        </div>
+        <div>
+          <div class="stat-number">4</div>
+          <div class="stat-label">Client Projects</div>
+        </div>
+        <div>
+          <div class="stat-number">2</div>
+          <div class="stat-label">Patents · SW</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="research" id="research">
+  <div class="section-label reveal">Research Areas</div>
+  <div class="research-grid">
+    <div class="research-card research-card--academic reveal">
+      <div class="research-top">
+        <div class="research-icon">✍️</div>
+        <span class="affil affil--academic">Academic</span>
+      </div>
+      <h3>Essay Creativity Scoring</h3>
+      <p>에세이의 창의성을 자동으로 평가하는 모델을 연구합니다. 루브릭 설계부터 자기지도학습 기반 스코어링 모델(R2C)까지, ACES 분야를 개척하고 있습니다.</p>
+    </div>
+    <div class="research-card reveal">
+      <div class="research-top">
+        <div class="research-icon">🤖</div>
+        <span class="affil affil--industry">Industry</span>
+      </div>
+      <h3>LLM Development</h3>
+      <p>솔트룩스에서 자체 LLM 'Luxia' 시리즈를 개발하고 있습니다. Pre-training 데이터 큐레이션, SFT, DPO, Model Merging 등 학습 전 과정을 담당하며 모델 성능을 최적화합니다.</p>
+    </div>
+    <div class="research-card reveal">
+      <div class="research-top">
+        <div class="research-icon">🎯</div>
+        <span class="affil affil--industry">Industry</span>
+      </div>
+      <h3>Domain Adaptation</h3>
+      <p>법률·금융·의료·보험·교육·원자력 등 다양한 산업 도메인에 LLM을 특화시키는 프로젝트를 수행합니다. Taxonomy 설계부터 Domain SFT, RAG 통합까지 End-to-End로 구축합니다.</p>
+    </div>
+    <div class="research-card reveal">
+      <div class="research-top">
+        <div class="research-icon">⚙️</div>
+        <span class="affil affil--industry">Industry</span>
+      </div>
+      <h3>LLM Serving &amp; Inference</h3>
+      <p>vLLM 기반 대규모 모델 서빙을 설계·운영합니다. 120B급 MoE 모델의 Tensor Parallel × Replica 구성, MXFP4 양자화 배포, 폐쇄망 환경 배포까지 — 학습된 모델이 실제 서비스로 이어지는 마지막 구간을 담당합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="section-label reveal">Projects — Luxia LLM Series<span class="affil affil--industry">Industry</span></div>
+
+  <details class="project-card reveal">
+    <summary>
+    <div class="project-header">
+      <d
