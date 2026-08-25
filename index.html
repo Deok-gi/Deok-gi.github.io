@@ -8,7 +8,7 @@
 </head>
 <body><main>Loading portfolio…</main><script>
 (async()=>{
-  const paths=['portfolio_payload/gz_00.txt','portfolio_payload/gz_01_0.txt','portfolio_payload/gz_01_1.txt','portfolio_payload/gz_01_2.txt','portfolio_payload/gz_02_0.txt','portfolio_payload/gz_02_1.txt','portfolio_payload/gz_02_2.txt'];
+  const paths=['portfolio_payload/gz_00.txt','portfolio_payload/gz_01_0.txt','portfolio_payload/gz_01_1.txt','portfolio_payload/rest_a.txt','portfolio_payload/rest_b.txt'];
   const [legacy,...parts]=await Promise.all([
     fetch('legacy.html').then(r=>{if(!r.ok)throw new Error('legacy fetch failed');return r.text()}),
     ...paths.map(p=>fetch(p).then(r=>{if(!r.ok)throw new Error('payload fetch failed: '+p);return r.text()}))
