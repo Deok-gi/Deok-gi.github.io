@@ -1,1 +1,1094 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deokgi Kim — AI Researcher & LLM Engineer</title><style>html,body{height:100%;margin:0;font-family:system-ui,sans-serif;background:#FBFBF9;color:#6A6A6E}body{display:grid;place-items:center}main{padding:32px}</style></head><body><main>Loading portfolio…</main><script>(async()=>{const paths=["compact_v3/p0a.txt", "compact_v3/p0b.txt", "compact_v3/p1.txt", "compact_v3/p2.txt", "compact_v3/p3.txt", "compact_v3/p4.txt"];const parts=await Promise.all(paths.map(p=>fetch(p).then(r=>{if(!r.ok)throw new Error('payload fetch failed: '+p);return r.text()})));const b64=parts.join('').replace(/\s+/g,'');const bin=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));const stream=new Blob([bin]).stream().pipeThrough(new DecompressionStream('gzip'));const html=await new Response(stream).text();document.open();document.write(html);document.close();})().catch(err=>{document.body.innerHTML='<main><h1>Portfolio load error</h1><p>'+String(err.message||err)+'</p></main>';});</script></body></html>
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deokgi Kim — LLM Post-training Engineer</title>
+<meta content="LLM 데이터 설계부터 post-training, distillation, 평가, 도메인 적용까지 수행하는 김덕기의 포트폴리오입니다." name="description"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #FBFBF9;
+    --bg-deep: #F4F4F0;
+    --text: #16161A;
+    --text-secondary: #6A6A6E;
+    --text-tertiary: #9A9A9E;
+    --accent: #1A1A1A;
+    --border: #E6E6E1;
+    --border-soft: #EFEFEA;
+    --highlight: #4338CA;
+    --highlight-soft: rgba(67, 56, 202, 0.07);
+    --card-bg: #FFFFFF;
+    --tag-bg: #F2F2EE;
+    --green: #15803D;
+    --red: #B91C1C;
+    --ink: #16161A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.005em;
+  }
+
+  ::selection { background: var(--ink); color: var(--bg); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(251,251,249,0.72);
+    backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.5s, padding 0.4s;
+  }
+  nav.scrolled { border-bottom-color: var(--border); padding: 1.1rem 3rem; }
+
+  .nav-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.3rem; letter-spacing: -0.01em;
+    color: var(--text); text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .nav-logo:hover { opacity: 0.6; }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a {
+    font-size: 0.72rem; text-decoration: none; color: var(--text-secondary);
+    letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
+    transition: color 0.3s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--text); transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { width: 100%; }
+
+  section { padding: 0 3rem; }
+
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-secondary); font-weight: 500; margin-bottom: 3rem;
+    display: flex; align-items: center; gap: 1.2rem;
+  }
+  .section-label::before {
+    content: ''; width: 28px; height: 1px; background: var(--text);
+    display: inline-block; flex-shrink: 0;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; max-width: 940px; padding-top: 6rem;
+  }
+  .hero-greeting {
+    font-size: 0.78rem; color: var(--text-secondary);
+    letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500;
+    margin-bottom: 1.8rem; opacity: 0; animation: fadeUp 0.9s ease 0.2s forwards;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-greeting::before {
+    content: ''; width: 32px; height: 1px; background: var(--text-tertiary);
+    display: inline-block;
+  }
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(3rem, 6.5vw, 6rem); font-weight: 400;
+    line-height: 1.05; letter-spacing: -0.035em; margin-bottom: 2.2rem;
+    opacity: 0; animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+  .hero h1 em { font-style: italic; color: var(--highlight); position: relative; }
+  .hero-desc {
+    font-size: 1.18rem; color: var(--text-secondary);
+    max-width: 580px; line-height: 1.85; font-weight: 300;
+    opacity: 0; animation: fadeUp 0.9s ease 0.6s forwards;
+  }
+  .hero-links {
+    margin-top: 3.2rem; display: flex; gap: 1.2rem; align-items: center;
+    opacity: 0; animation: fadeUp 0.9s ease 0.8s forwards;
+  }
+  .hero-links a {
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; color: var(--text); font-weight: 500;
+    padding: 0.85rem 2rem; border: 1px solid var(--border);
+    border-radius: 100px; transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hero-links a:hover { background: var(--text); color: var(--bg); border-color: var(--text); transform: translateY(-2px); }
+  .hero-links a.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .hero-links a.primary:hover { background: var(--highlight); border-color: var(--highlight); transform: translateY(-2px); }
+
+  /* ABOUT */
+  .about { padding-top: 8rem; padding-bottom: 8rem; max-width: 1200px; }
+  .about-grid {
+    display: grid; grid-template-columns: 0.7fr 1.3fr;
+    gap: 5rem; align-items: start;
+  }
+  .about-photo {
+    width: 100%; max-width: 260px;
+    aspect-ratio: 3/4; border-radius: 4px; overflow: hidden;
+  }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .about-content h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.8rem; font-weight: 400;
+    letter-spacing: -0.025em; margin-bottom: 1.8rem; line-height: 1.15;
+  }
+  .about-content p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.97rem; line-height: 1.85; }
+  .about-content p.lead {
+    font-family: 'Newsreader', serif;
+    font-size: 1.25rem; font-weight: 300; line-height: 1.7;
+    color: var(--text); margin-bottom: 1.8rem; letter-spacing: -0.01em;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 3rem; padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .about-stats > div { position: relative; padding-right: 2rem; }
+  .about-stats > div:not(:last-child)::after {
+    content: ''; position: absolute; right: 1rem; top: 0.2rem; bottom: 0.2rem;
+    width: 1px; background: var(--border-soft);
+  }
+  .stat-number {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.8rem; letter-spacing: -0.03em; line-height: 1;
+    color: var(--text);
+  }
+  .stat-label {
+    font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-secondary); margin-top: 0.6rem;
+    font-weight: 500;
+  }
+
+  .about-roles {
+    display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.5rem; margin-bottom: 0;
+  }
+  .about-role-tag {
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.03em;
+    padding: 0.45rem 1.1rem; border-radius: 100px;
+    border: 1px solid var(--border); color: var(--text); background: var(--card-bg);
+  }
+
+  /* AFFILIATION / PHASE SYSTEM — academic=green, industry=indigo */
+  .affil {
+    display: inline-flex; align-items: center; gap: 0.42rem;
+    font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 600; line-height: 1; white-space: nowrap; font-style: normal;
+    padding: 0.34rem 0.7rem; border-radius: 100px;
+  }
+  .affil::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: currentColor; flex-shrink: 0;
+  }
+  .affil--academic { color: var(--green); background: rgba(21,128,61,0.09); }
+  .affil--industry { color: var(--highlight); background: var(--highlight-soft); }
+
+  /* two-phase narrative blocks inside About */
+  .about-phase {
+    position: relative; padding-left: 1.4rem; margin-bottom: 1.6rem;
+    border-left: 2px solid var(--phase-color, var(--border));
+  }
+  .about-phase--academic { --phase-color: var(--green); }
+  .about-phase--industry { --phase-color: var(--highlight); }
+  .phase-eyebrow {
+    display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.7rem;
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 600; color: var(--phase-color);
+  }
+  .phase-eyebrow .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--phase-color); flex-shrink: 0;
+  }
+  .about-phase p { margin-bottom: 0 !important; }
+
+  /* research card affiliation header row */
+  .research-top {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .research-top .research-icon { margin-bottom: 0; }
+  .research-card--academic::before { background: var(--green); }
+
+  /* experience org affiliation chip */
+  .exp-org .affil { margin-left: 0.6rem; vertical-align: middle; }
+
+  /* RESEARCH */
+  .research { padding-top: 8rem; padding-bottom: 8rem; max-width: 1200px; }
+  .research-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .research-card {
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 2.5rem 2rem; background: var(--card-bg);
+    transition: all 0.4s ease; cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .research-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 3px; background: var(--highlight);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+  }
+  .research-card:hover::before { transform: scaleX(1); }
+  .research-card:hover {
+    border-color: transparent;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.06); transform: translateY(-4px);
+  }
+  .research-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--tag-bg); display: flex;
+    align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 1.5rem;
+  }
+  .research-card h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.4rem; font-weight: 400;
+    margin-bottom: 0.75rem; letter-spacing: -0.01em;
+  }
+  .research-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; }
+
+  /* PROJECTS */
+  .projects { padding-top: 8rem; padding-bottom: 8rem; max-width: 1200px; }
+
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+  }
+  details.project-card:not([open]):hover {
+    border-color: var(--text-tertiary);
+    box-shadow: 0 12px 40px -12px rgba(0,0,0,0.10);
+    transform: translateY(-2px);
+  }
+  details.project-card[open] {
+    border-color: var(--text-tertiary);
+    box-shadow: 0 16px 50px -16px rgba(0,0,0,0.12);
+  }
+
+  .project-header {
+    padding: 2.5rem 3rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .project-title-area h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.6rem;
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    background: var(--tag-bg);
+    border-radius: 4px;
+  }
+
+  .doc-link {
+    display: flex; align-items: center; gap: 0.9rem;
+    margin-top: 1.25rem; padding: 1rem 1.25rem;
+    background: var(--bg-deep); border: 1px solid var(--border);
+    border-radius: 8px; text-decoration: none; color: var(--text);
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .doc-link:hover {
+    border-color: var(--text-tertiary);
+    background: var(--card-bg);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px -10px rgba(0,0,0,0.12);
+  }
+  .doc-link-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .doc-link-text { display: flex; flex-direction: column; flex: 1; line-height: 1.4; }
+  .doc-link-text strong { font-size: 0.85rem; font-weight: 500; }
+  .doc-link-text { font-size: 0.74rem; color: var(--text-secondary); }
+  .doc-link-arrow {
+    font-size: 1rem; color: var(--text-tertiary); flex-shrink: 0;
+    transition: transform 0.3s, color 0.3s;
+  }
+  .doc-link:hover .doc-link-arrow { transform: translate(2px, -2px); color: var(--highlight); }
+
+  .project-title-area .project-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 600px;
+  }
+
+  .project-badge {
+    flex-shrink: 0;
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.1rem 0.5rem 0.95rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .project-badge::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--badge-dot, var(--highlight));
+    flex-shrink: 0;
+  }
+
+  .project-role {
+    padding: 0 3rem;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .project-role span {
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-weight: 400;
+  }
+
+  .role-primary {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .role-secondary {
+    background: var(--tag-bg);
+    color: var(--text-secondary);
+  }
+
+  .project-body {
+    padding: 0 3rem 2.5rem;
+  }
+
+  /* Card-level collapse */
+  details.project-card {
+    padding: 0;
+  }
+  details.project-card > summary {
+    list-style: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s ease;
+  }
+  details.project-card > summary::-webkit-details-marker {
+    display: none;
+  }
+  details.project-card > summary:hover {
+    background: rgba(0, 0, 0, 0.015);
+  }
+  details.project-card > summary::after {
+    content: "+";
+    position: absolute;
+    right: 3rem;
+    top: 2.75rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--tag-bg);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 1;
+    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  }
+  details.project-card[open] > summary::after {
+    transform: rotate(45deg);
+    background: var(--text);
+    color: var(--bg);
+  }
+  details.project-card > summary .project-header {
+    padding-right: 5.5rem;
+  }
+  @media (max-width: 768px) {
+    details.project-card > summary::after {
+      right: 1.5rem;
+      top: 2rem;
+      width: 28px;
+      height: 28px;
+      font-size: 1.1rem;
+    }
+    details.project-card > summary .project-header {
+      padding-right: 1.5rem;
+    }
+    details.project-card > summary::after {
+      top: auto;
+      bottom: 1.5rem;
+    }
+  }
+
+  .project-phase {
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+
+  .phase-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--highlight);
+    background: rgba(58,58,255,0.08);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .phase-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* Toggle phases */
+  .phase-toggle {
+    border-top: 1px solid var(--border);
+    padding: 0;
+  }
+  .phase-toggle summary {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.25rem 0; cursor: pointer;
+    list-style: none; user-select: none;
+  }
+  .phase-toggle summary::-webkit-details-marker { display: none; }
+  .phase-toggle summary::after {
+    content: '+'; margin-left: auto;
+    font-size: 1.2rem; font-weight: 300; color: var(--text-secondary);
+    transition: transform 0.3s;
+  }
+  .phase-toggle[open] summary::after {
+    content: '−';
+  }
+  .phase-toggle-body {
+    padding: 0 0 1.5rem 0;
+    animation: toggleOpen 0.3s ease;
+  }
+  @keyframes toggleOpen {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .phase-summary-metrics {
+    display: flex; gap: 1rem; margin-left: 0.5rem;
+  }
+  .phase-summary-metrics span {
+    font-size: 0.72rem; font-weight: 500;
+    padding: 0.2rem 0.6rem; border-radius: 4px;
+  }
+
+  .phase-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .phase-detail {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  .bench-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    margin: 1rem 0;
+    font-family: 'JetBrains Mono', 'DM Sans', monospace;
+  }
+
+  .bench-table th {
+    text-align: left;
+    font-weight: 500;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 2px solid var(--border);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .bench-table td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .bench-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .bench-table .model-name {
+    color: var(--text);
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+  }
+
+  .bench-table .highlight-row td {
+    background: rgba(58,58,255,0.04);
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .bench-table .highlight-row .model-name {
+    color: var(--highlight);
+  }
+
+  .metric-up {
+    color: var(--green);
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+  .metric-down {
+    color: var(--red);
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+
+  .issue-box {
+    background: #FEF3C7;
+    border-left: 3px solid #F59E0B;
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .issue-box strong {
+    color: #92400E;
+  }
+
+  .resolve-box {
+    background: #ECFDF5;
+    border-left: 3px solid var(--green);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .resolve-box strong {
+    color: #065F46;
+  }
+
+  .project-result {
+    background: var(--ink);
+    color: rgba(255,255,255,0.92);
+    padding: 2.2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-result::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0;
+    width: 3px; background: var(--result-accent, var(--highlight));
+  }
+  .project-result::after {
+    content: '';
+    position: absolute; top: -50%; right: -10%;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, var(--result-glow, rgba(67,56,202,0.18)) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .result-text h4 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.55rem;
+    font-weight: 400;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .result-text p {
+    font-size: 0.82rem;
+    opacity: 0.7;
+  }
+
+  .result-link {
+    color: #fff;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.6rem 1.5rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 100px;
+    transition: all 0.3s;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .result-link:hover {
+    background: #fff;
+    color: var(--text);
+  }
+
+  /* PUBLICATIONS */
+  .publications { padding-top: 8rem; padding-bottom: 8rem; max-width: 1200px; }
+  .pub-item {
+    display: grid; grid-template-columns: 80px 1fr auto;
+    gap: 2.5rem; align-items: start; padding: 2rem 0;
+    border-bottom: 1px solid var(--border); transition: all 0.3s;
+    text-decoration: none; color: inherit;
+  }
+  .pub-item:first-of-type { border-top: 1px solid var(--border); }
+  .pub-item:hover { padding-left: 1rem; }
+  .pub-year {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem; color: var(--text-secondary); padding-top: 0.15rem;
+  }
+  .pub-info h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.4rem; line-height: 1.4; }
+  .pub-info p { font-size: 0.82rem; color: var(--text-secondary); }
+  .pub-venue {
+    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--highlight); font-weight: 500; padding-top: 0.2rem; white-space: nowrap;
+  }
+  .pub-link-icon {
+    display: inline-block; margin-left: 0.5rem; font-size: 0.75rem;
+    opacity: 0; transform: translateX(-4px); transition: all 0.3s;
+  }
+  .pub-item:hover .pub-link-icon { opacity: 1; transform: translateX(0); }
+
+  /* EXPERIENCE */
+  .experience { padding-top: 8rem; padding-bottom: 8rem; max-width: 1200px; }
+  .exp-item {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 4rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border);
+  }
+  .exp-item:first-of-type { border-top: 1px solid var(--border); }
+  .exp-period { font-size: 0.82rem; color: var(--text-secondary); padding-top: 0.25rem; }
+  .exp-content h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.25rem; }
+  .exp-content .exp-org {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1rem; font-style: italic; color: var(--text-secondary); margin-bottom: 0.75rem;
+  }
+  .exp-content p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .exp-tags span {
+    font-size: 0.7rem; letter-spacing: 0.05em; padding: 0.35rem 0.85rem;
+    background: var(--tag-bg); border-radius: 100px; color: var(--text-secondary); font-weight: 400;
+  }
+
+  /* CONTACT */
+  .contact { padding-top: 8rem; padding-bottom: 10rem; max-width: 1200px; }
+  .contact-content { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
+  .contact-text h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem; font-weight: 400;
+    letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1.5rem;
+  }
+  .contact-text p { font-size: 0.95rem; color: var(--text-secondary); max-width: 380px; }
+  .contact-links { display: flex; flex-direction: column; gap: 1.25rem; justify-content: center; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    text-decoration: none; color: var(--text); font-size: 0.95rem;
+    padding: 1rem 1.5rem; border: 1px solid var(--border);
+    border-radius: 8px; transition: all 0.3s;
+  }
+  .contact-link:hover { border-color: var(--text); padding-left: 2rem; }
+  .contact-link-label {
+    font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-secondary); min-width: 60px;
+  }
+
+  footer {
+    padding: 2rem 3rem; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    section { padding: 0 1.5rem; }
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-stats { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1rem; }
+    .about-stats > div { padding-right: 0; }
+    .about-stats > div:not(:last-child)::after { display: none; }
+    .about-photo { max-width: 180px; }
+    .research-grid { grid-template-columns: 1fr; }
+    .pub-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .pub-venue { order: -1; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+    .contact-content { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    .hero h1 { font-size: 2.5rem; }
+    .project-header { flex-direction: column; }
+    .project-body { padding: 0 1.5rem 2rem; }
+    .project-header { padding: 2rem 1.5rem 1.5rem; }
+    .project-role { padding: 0 1.5rem; }
+    .project-result { padding: 1.5rem; flex-direction: column; text-align: center; }
+    .bench-table { font-size: 0.68rem; }
+    .bench-table th, .bench-table td { padding: 0.4rem 0.5rem; }
+    .phase-summary-metrics { display: none; }
+  }
+
+  /* Career-first portfolio refinements */
+  .career-highlights {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    margin:-0.5rem 0 3.5rem; border:1px solid var(--border);
+    border-radius:8px; overflow:hidden; background:var(--card-bg);
+  }
+  .career-highlight { padding:1.4rem 1.5rem; min-height:92px; display:flex; flex-direction:column; justify-content:center; }
+  .career-highlight:not(:last-child) { border-right:1px solid var(--border); }
+  .career-highlight strong { font-family:'Instrument Serif',serif; font-size:1.35rem; font-weight:400; letter-spacing:-0.01em; color:var(--text); line-height:1.2; }
+  .career-highlight span { margin-top:0.45rem; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-secondary); font-weight:500; }
+  .section-intro { max-width:760px; margin:-1.2rem 0 2.8rem; color:var(--text-secondary); font-size:0.92rem; line-height:1.8; }
+  .experience { padding-top:8rem; }
+  @media (max-width:768px) {
+    .career-highlights { grid-template-columns:repeat(2,1fr); }
+    .career-highlight:nth-child(odd) { border-right:1px solid var(--border); }
+    .career-highlight:nth-child(-n+2) { border-bottom:1px solid var(--border); }
+    .career-highlight:nth-child(2) { border-right:none; }
+    .career-highlight:last-child { border-right:none; }
+    .section-intro { margin-top:-1.5rem; }
+  }
+
+  /* 2026 compact portfolio refresh */
+  section { scroll-margin-top: 72px; }
+  .projects, .experience, .publications, .research, .contact { padding-top: 6.5rem; padding-bottom: 6.5rem; }
+  .section-intro { max-width: 820px; margin-bottom: 2rem; }
+  .section-intro strong { color: var(--text); font-weight: 500; }
+  .exp-content p strong { color: var(--text); font-weight: 500; }
+
+  .series-strip {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:.65rem;
+    margin:0 0 2rem;
+  }
+  .series-step {
+    min-height:102px; padding:1rem; border:1px solid var(--border); border-radius:8px;
+    background:var(--card-bg); display:flex; flex-direction:column; gap:.18rem;
+  }
+  .series-step strong { font-family:'Instrument Serif',serif; font-size:1.05rem; font-weight:400; }
+  .series-step span { font-size:.76rem; color:var(--text-secondary); }
+  .series-step small { margin-top:auto; font-size:.64rem; color:var(--text-tertiary); font-family:'JetBrains Mono',monospace; }
+  .series-step--mid { background:var(--bg-deep); }
+  .series-step--active { border-color:var(--text-tertiary); box-shadow:0 8px 26px -18px rgba(0,0,0,.25); }
+
+  .compact-card .project-header { padding-top:2rem; padding-bottom:1.65rem; }
+  .compact-card .project-title-area h3 { font-size:1.75rem; }
+  .compact-card .project-body { padding-top:.5rem; }
+  .case-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; padding-top:.75rem; border-top:1px solid var(--border); }
+  .case-block { padding:1.1rem 1.15rem; border-radius:8px; background:var(--bg-deep); min-height:150px; }
+  .case-kicker { font-family:'JetBrains Mono',monospace; font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color:var(--highlight); margin-bottom:.7rem; }
+  .case-block p, .case-points { font-size:.82rem; color:var(--text-secondary); line-height:1.7; }
+  .case-block p strong { color:var(--text); font-weight:500; }
+  .case-points { margin:0; padding-left:1.1rem; }
+  .case-points li + li { margin-top:.35rem; }
+  .generation-note { grid-column:1 / -1; padding:1rem 1.15rem; border:1px solid var(--border); border-radius:8px; background:var(--card-bg); }
+  .generation-note strong { font-size:.82rem; font-weight:500; }
+  .generation-note p { font-size:.78rem; color:var(--text-secondary); line-height:1.65; margin-top:.4rem; }
+  .generation-note p strong { color:var(--text); }
+  .metric-row { display:flex; flex-wrap:wrap; gap:.45rem; align-content:flex-start; }
+  .metric-pill { font-size:.68rem; line-height:1.2; padding:.42rem .68rem; border-radius:100px; background:var(--card-bg); border:1px solid var(--border); color:var(--text-secondary); white-space:nowrap; }
+
+  .milestone-card { margin:1.5rem 0; padding:1.8rem 2rem; border:1px solid var(--border); border-radius:10px; background:var(--bg-deep); }
+  .milestone-card h3 { font-family:'Instrument Serif',serif; font-size:1.45rem; font-weight:400; margin:.3rem 0 1.2rem; }
+  .milestone-items { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .milestone-item { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:1rem 1.1rem; }
+  .milestone-item strong { font-size:.82rem; font-weight:500; }
+  .milestone-item p { font-size:.78rem; color:var(--text-secondary); line-height:1.65; margin-top:.45rem; }
+  .milestone-item p strong { color:var(--text); }
+
+  .rnd-list { border-top:1px solid var(--border); }
+  .rnd-item { display:grid; grid-template-columns:180px 1fr; gap:2.5rem; padding:2rem 0; border-bottom:1px solid var(--border); }
+  .rnd-meta { display:flex; flex-direction:column; gap:.35rem; font-size:.74rem; color:var(--text-secondary); }
+  .rnd-meta strong { font-family:'JetBrains Mono',monospace; font-size:.68rem; font-weight:500; color:var(--highlight); }
+  .rnd-content h3 { font-family:'Instrument Serif',serif; font-size:1.4rem; font-weight:400; margin-bottom:.55rem; }
+  .rnd-content p { font-size:.83rem; line-height:1.7; color:var(--text-secondary); margin-bottom:.8rem; max-width:760px; }
+
+  @media (max-width: 900px) {
+    .series-strip { grid-template-columns:repeat(2,1fr); }
+    .case-grid { grid-template-columns:1fr; }
+    .case-block { min-height:0; }
+  }
+  @media (max-width: 768px) {
+    .projects, .experience, .publications, .research, .contact { padding-top:5rem; padding-bottom:5rem; }
+    .series-strip { grid-template-columns:repeat(2,1fr); }
+    .milestone-items { grid-template-columns:1fr; }
+    .rnd-item { grid-template-columns:1fr; gap:.8rem; }
+    .project-result { padding:1.6rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<nav id="nav">
+<a class="nav-logo" href="#">Deokgi Kim.</a>
+<div class="nav-links"><a href="#experience">Experience</a><a href="#projects">Luxia</a><a href="#business">Domain LLM</a><a href="#randd">R&amp;D</a><a href="#research">Research</a><a href="#publications">Publications</a><a href="#contact">Contact</a></div>
+</nav>
+<section class="hero" id="hero">
+<p class="hero-greeting">Deokgi Kim · LLM Post-training Engineer</p>
+<h1>Building LLMs that<br/>learn, reason —<br/><em>and ship.</em></h1>
+<p class="hero-desc">솔트룩스 AI Labs에서 자체 LLM <strong>LUXIA</strong> 시리즈의 데이터 설계부터 SFT·선호 최적화·distillation·평가까지 담당합니다. 학습 방법을 연구하는 데 그치지 않고 보험·원자력·교육·법률 도메인의 실제 제품으로 연결해 왔습니다.</p>
+<div class="hero-links"><a class="primary" href="#experience">Experience</a><a href="#projects">Selected Work</a></div>
+</section><section class="experience" id="experience">
+<div class="section-label reveal">Experience</div>
+<div class="career-highlights reveal">
+<div class="career-highlight"><strong>2024 — Present</strong><span>Saltlux AI Labs</span></div>
+<div class="career-highlight"><strong>LUXIA 1 → 4</strong><span>LLM Series</span></div>
+<div class="career-highlight"><strong>4+</strong><span>Domain LLM Projects</span></div>
+<div class="career-highlight"><strong>ACL · NAACL</strong><span>Research</span></div>
+</div>
+<div class="exp-item reveal">
+<div class="exp-period">2024.01 — Present</div>
+<div class="exp-content">
+<h3>LLM Post-training Engineer</h3>
+<div class="exp-org">Saltlux AI Labs (솔트룩스)<span class="affil affil--industry">Industry</span></div>
+<p>자체 LLM <strong>LUXIA 1–4</strong>의 data curation → post-training → evaluation을 반복 개선하고, 보험·원자력·교육·법률 도메인 LLM을 고객 환경에 적용했습니다. 데이터와 학습 recipe를 직접 설계하며 연구 결과를 배포 가능한 모델로 만드는 데 집중합니다.</p>
+<div class="exp-tags"><span>LLM Training</span><span>Data Curation</span><span>Post-training</span><span>GRPO · MOPD</span><span>Evaluation</span><span>Domain LLM · RAG</span></div>
+</div>
+</div>
+<div class="exp-item reveal">
+<div class="exp-period">University Research</div>
+<div class="exp-content">
+<h3>Undergraduate Researcher</h3>
+<div class="exp-org">DI Lab, Kunsan National University (군산대학교)<span class="affil affil--academic">Academic</span></div>
+<p>에세이 창의성 자동 평가를 중심으로 rubric 설계·representation learning·희귀 토큰 분석을 연구하고, 관련 결과를 ACL·NAACL에 발표했습니다.</p>
+<div class="exp-tags"><span>Automated Essay Scoring</span><span>Representation Learning</span><span>BERT</span><span>NLP Research</span></div>
+</div>
+</div>
+</section><section class="projects" id="projects">
+<div class="section-label reveal">Selected Work — Luxia LLM Series</div>
+
+<div aria-label="LUXIA model evolution" class="series-strip reveal">
+<div class="series-step"><strong>LUXIA 1</strong><span>Foundation</span><small>Leaderboard #1</small></div>
+<div class="series-step"><strong>LUXIA 2</strong><span>Production</span><small>8B · 32B</small></div>
+<div class="series-step"><strong>LUXIA 3</strong><span>Domain Agent</span><small>128K · Tool Use</small></div>
+<div class="series-step series-step--active"><strong>LUXIA 4</strong><span>MOPD · MoE</span><small>In Progress</small></div>
+</div>
+<details class="project-card reveal compact-card">
+<summary><div class="project-header"><div class="project-title-area">
+<span class="project-period">LUXIA 1</span><h3>Foundation — 첫 자체 LLM</h3>
+<p class="project-subtitle">InternLM2-20B 기반 21.4B 모델에 SFT·DPO·model merging을 적용해 성능 균형을 맞추고, Open LLM Leaderboard 35B 이하 1위를 달성.</p>
+</div><span class="project-badge" style="--badge-dot:#16A34A;">#1 under 35B</span></div></summary>
+<div class="project-body">
+<div class="case-grid">
+<div class="case-block"><div class="case-kicker">Challenge</div><p>DPO가 선호 품질을 높이는 동시에 GSM8K 등 일부 reasoning 성능을 떨어뜨리는 trade-off가 발생.</p></div>
+<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>Base model 선정 및 SFT/DPO pipeline 구성</li><li>Checkpoint별 능력 변화를 비교</li><li>Model merging으로 상충 능력 결합</li></ul></div>
+<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">Final Avg 78.14</span><span class="metric-pill">GSM8K SFT +9.93%p</span><span class="metric-pill">Leaderboard #1</span></div></div>
+</div>
+</div>
+<div class="project-result" style="--result-accent:#16A34A;--result-glow:rgba(22,163,74,.18);"><div class="result-text"><h4>Open LLM Leaderboard #1</h4><p>35B 이하 모델 부문 — 첫 자체 LLM의 학습·평가 루프 확립</p></div><a class="result-link" href="https://www.aitimes.com/news/articleView.html?idxno=158004" target="_blank">Press Coverage ↗</a></div>
+</details>
+<details class="project-card reveal compact-card">
+<summary><div class="project-header"><div class="project-title-area">
+<span class="project-period">LUXIA 2</span><h3>Production — 데이터 다양성과 선호 품질</h3>
+<p class="project-subtitle">8B·32B 듀얼 모델을 출시하며 500K+ SFT 데이터와 ~20K preference data를 체계화하고, 실제 서비스에 적용.</p>
+</div><span class="project-badge" style="--badge-dot:#2563EB;">Production</span></div></summary>
+<div class="project-body">
+<div class="case-grid">
+<div class="case-block"><div class="case-kicker">Focus</div><p>모델 크기보다 <strong>데이터 다양성·지시 이행·답변 품질</strong>을 안정적으로 확장하는 production recipe 구축.</p></div>
+<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>500K+ SFT samples, 150+ domain taxonomy 구성</li><li>~20K preference data와 4축 DPO 설계</li><li>8B/32B 모델을 동일 평가 체계로 반복 개선</li></ul></div>
+<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">500K+ SFT</span><span class="metric-pill">150+ Domains</span><span class="metric-pill">8B · 32B Deployed</span></div></div>
+<div class="generation-note"><strong>Reasoning capability expansion</strong><p>Complex Reasoning 데이터와 pre/post-train taxonomy를 확장해 수학 추론 성능을 강화하고 <strong>MATH-500 +44%p</strong>를 달성.</p></div>
+</div>
+</div>
+<div class="project-result" style="--result-accent:#2563EB;--result-glow:rgba(37,99,235,.18);"><div class="result-text"><h4>Production LLM Series</h4><p>데이터 설계와 preference optimization을 제품 수준의 반복 학습 체계로 확장</p></div></div>
+</details>
+<details class="project-card reveal compact-card">
+<summary><div class="project-header"><div class="project-title-area">
+<span class="project-period">LUXIA 3</span><h3>Vertical Domain Agent</h3>
+<p class="project-subtitle">전문 도메인 데이터, tool use, long-context를 함께 확장해 법률·특허·연구 업무에 맞춘 agentic LLM으로 진화.</p>
+</div><span class="project-badge" style="--badge-dot:#0EA5E9;">Deployed</span></div></summary>
+<div class="project-body">
+<div class="case-grid">
+<div class="case-block"><div class="case-kicker">Focus</div><p>일반 대화 성능을 유지하면서 전문 지식·multi-doc RAG·tool use·long-context 능력을 한 모델에 통합.</p></div>
+<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>Patent/Legal 중심 도메인 데이터 비중 확대</li><li>Agent·Tool Use·Long-context post-training 데이터 확장</li><li>Deep-Think reasoning 데이터 강화 및 평가 루프 운영</li></ul></div>
+<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">1.18M Post-train</span><span class="metric-pill">128K Context</span><span class="metric-pill">MMLU 87.50</span><span class="metric-pill">Ko-IFEval 83.63</span></div></div>
+<div class="generation-note"><strong>Reasoning &amp; distillation</strong><p>Deep-Think reasoning과 instruction following 데이터를 강화하고, on-policy distillation을 후속 post-training 전략으로 검증.</p></div>
+</div>
+</div>
+<div class="project-result" style="--result-accent:#0EA5E9;--result-glow:rgba(14,165,233,.18);"><div class="result-text"><h4>Domain Agent — Deployed</h4><p>전문 도메인과 agentic capability를 실제 production model에 통합</p></div></div>
+</details>
+<details class="project-card reveal compact-card">
+<summary><div class="project-header"><div class="project-title-area">
+<span class="project-period">LUXIA 4 · IN PROGRESS</span><h3>MOPD &amp; MoE Upcycling</h3>
+<p class="project-subtitle">31B student에 domain-specialist teacher의 역량을 통합하는 MOPD와, 별도 Dense → ~80B MoE upcycling 트랙을 병행.</p>
+</div><span class="project-badge" style="--badge-dot:#A855F7;">MOPD · MoE</span></div></summary>
+<div class="project-body">
+<div class="case-grid">
+<div class="case-block"><div class="case-kicker">Track A · 31B</div><p><strong>Multi-Teacher On-Policy Distillation</strong>로 domain-specialist teacher들의 capability를 하나의 student에 통합하는 post-training을 진행 중.</p></div>
+<div class="case-block"><div class="case-kicker">Track B · ~80B</div><p>Dense 모델을 Mixture-of-Experts로 upcycling하고 recovery pre-training으로 base distribution을 복원하는 확장 실험을 진행.</p></div>
+<div class="case-block"><div class="case-kicker">Goal</div><div class="metric-row"><span class="metric-pill">31B MOPD</span><span class="metric-pill">Multi-Teacher</span><span class="metric-pill">Dense → MoE ~80B</span></div></div>
+</div>
+</div>
+<div class="project-result" style="--result-accent:#A855F7;--result-glow:rgba(168,85,247,.18);"><div class="result-text"><h4>Next-generation Post-training</h4><p>Capability integration과 model upcycling을 두 개의 독립 트랙으로 검증 중</p></div></div>
+</details>
+</section><section class="projects" id="business">
+<div class="section-label reveal">Domain LLM — Production &amp; Delivery</div>
+<details class="project-card reveal compact-card">
+<summary><div class="project-header"><div class="project-title-area"><span class="project-period">2024.05 — 2024.07</span><h3>M사 — 보험 상담 자동 요약 AI</h3><p class="project-subtitle">장문 상담을 10개 핵심 항목으로 구조화하는 보험 특화 LLM. 2개월간 데이터·모델·후처리를 반복 개선해 인바운드 90점, 아웃바운드 88점 달성.</p></div><span class="project-badge" style="--badge-dot:#D97706;">Delivered</span></div></summary>
+<div class="project-body"><div class="case-grid">
+<div class="case-block"><div class="case-kicker">Problem</div><p>장문 대화 context 초과, 상품명 표현 다양성, 인/아웃바운드 모델 분리 시 성능 저하.</p></div>
+<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>Chunked summarization + merge pipeline 설계</li><li>3차 반복 데이터셋 및 상품명 정규화</li><li>태스크별 prompt 분기 + 통합 모델 전략 채택</li></ul></div>
+<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">Inbound 90.0</span><span class="metric-pill">Outbound 88.0</span><span class="metric-pill">Production</span></div></div>
+</div></div></details>
+<details class="project-card reveal compact-card">
+<summary><div class="project-header"><div class="project-title-area"><span class="project-period">2024.06 — 2025.02</span><h3>한국원자력안전기술원 — ATOMIS</h3><p class="project-subtitle">Continual pre-training · domain SFT · Advanced RAG를 결합한 32B 원자력 특화 LLM. Hugging Face 공개 및 3개 benchmark SOTA 달성.</p></div><span class="project-badge" style="--badge-dot:#64748B;">Public Sector</span></div></summary>
+<div class="project-body"><div class="case-grid">
+<div class="case-block"><div class="case-kicker">Problem</div><p>원자력 전문 지식의 정확한 활용과 장문 문서 기반 질의응답을 동시에 요구하는 지식관리 환경.</p></div>
+<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>원자력 corpus 14GB 구성 및 continual pre-training</li><li>QA·요약·번역 중심 domain post-training</li><li>검색·재랭킹·생성을 연결한 Advanced RAG 설계</li></ul></div>
+<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">32B</span><span class="metric-pill">3 Benchmarks SOTA</span><span class="metric-pill">Hugging Face Public</span></div></div>
+</div></div><div class="project-result" style="--result-accent:#64748B;--result-glow:rgba(100,116,139,.18);"><div class="result-text"><h4>ATOMIS — Public Domain LLM</h4><p>원자력 안전 지식관리 시스템에 적용된 32B 특화 모델</p></div><a class="result-link" href="https://huggingface.co/KINS-ai/ATOMIS" target="_blank">Hugging Face ↗</a></div></details>
+<details class="project-card reveal compact-card">
+<summary><div class="project-header"><div class="project-title-area"><span class="project-period">2024.08</span><h3>I사 — AI Virtual Tutor</h3><p class="project-subtitle">초등학생 온라인 학습 서비스의 AI 관리교사. 안전성·학생 데이터 정합성·persona 일관성을 중심으로 교육 특화 LLM을 설계.</p></div><span class="project-badge" style="--badge-dot:#16A34A;">EdTech</span></div></summary>
+<div class="project-body"><div class="case-grid">
+<div class="case-block"><div class="case-kicker">Problem</div><p>아동 대상 서비스에서 안전한 응답, 실시간 학생 정보 grounding, 캐릭터 일관성이 동시에 필요.</p></div>
+<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>시나리오·발화 유형 기반 4단계 taxonomy 설계</li><li>CoT 기반 안전 학습 데이터 구성</li><li>학생 정보 RAG grounding과 persona 제어 적용</li></ul></div>
+<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">4-stage Taxonomy</span><span class="metric-pill">SFT</span><span class="metric-pill">Delivered</span></div></div>
+</div></div></details>
+<details class="project-card reveal compact-card">
+<summary><div class="project-header"><div class="project-title-area"><span class="project-period">2025.09 — 2026.02</span><h3>K사 — Legal AI Model</h3><p class="project-subtitle">Continual PT → large-scale SFT → further SFT → DPO와 reasoning model을 결합한 법률 AI 시스템. MS Word Add-in 환경에 통합.</p></div><span class="project-badge" style="--badge-dot:#7C3AED;">Legal AI</span></div></summary>
+<div class="project-body"><div class="case-grid">
+<div class="case-block"><div class="case-kicker">Problem</div><p>법률 전문 지식, 긴 문서 grounding, 답변 일관성과 심층 추론을 하나의 업무 flow로 연결해야 함.</p></div>
+<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>Continual PT → SFT → DPO 단계별 학습 recipe 적용</li><li>53GB pre-train corpus와 1.7M SFT 데이터 구축</li><li>의도분류부터 생성까지 6단계 RAG workflow 설계</li></ul></div>
+<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">53GB PT</span><span class="metric-pill">1.7M SFT</span><span class="metric-pill">Delivered</span></div></div>
+</div></div></details>
+</section><section class="projects" id="randd">
+<div class="section-label reveal">Applied R&amp;D — Research to IP</div>
+<div class="rnd-list reveal">
+<div class="rnd-item">
+<div class="rnd-meta"><span>2024.04 — Present</span><strong>IITP</strong></div>
+<div class="rnd-content"><h3>생성 AI 사회·윤리성 향상 연구</h3><p>멀티 에이전트 기반 사회윤리 정보 taxonomy 분류 기술과 데이터 체계를 설계하고, 결과를 지식재산으로 연결했습니다.</p><div class="metric-row"><span class="metric-pill">Patent 1</span><span class="metric-pill">SW Copyright 1</span><span class="metric-pill">Multi-Agent Taxonomy</span></div></div>
+</div>
+<div class="rnd-item">
+<div class="rnd-meta"><span>3-Year Project</span><strong>IITP</strong></div>
+<div class="rnd-content"><h3>디지털 에셋 지식정보 구조화</h3><p>Luxia 3와 Knowledge Graph를 결합해 3D 에셋 검색·추론 시스템을 구축하고 공식 검증 및 실증으로 연결했습니다.</p><div class="metric-row"><span class="metric-pill">SPARQL 91.43%</span><span class="metric-pill">TTA Certified</span><span class="metric-pill">Technology Transfer</span></div></div>
+</div>
+</div>
+</section><section class="research" id="research">
+<div class="section-label reveal">Research Focus</div>
+<div class="research-grid">
+<div class="research-card reveal"><div class="research-icon">↗</div><h3>Post-training &amp; Distillation</h3><p>SFT·DPO·model merging에서 on-policy distillation과 multi-teacher MOPD까지, 능력을 학습하고 통합하는 post-training 전략을 연구·적용합니다.</p></div>
+<div class="research-card reveal"><div class="research-icon">⌘</div><h3>Domain LLM &amp; RAG</h3><p>Continual pre-training, domain SFT, long-context, tool use, RAG를 결합해 전문 지식을 실제 업무 flow에 연결합니다.</p></div>
+<div class="research-card reveal"><div class="research-icon">✎</div><h3>NLP Research</h3><p>에세이 창의성 자동 평가를 중심으로 representation learning, rubric design, rare-token analysis를 연구해 왔습니다.</p></div>
+</div>
+</section><section class="publications" id="publications">
+<div class="section-label reveal">Selected Publications</div>
+<a class="pub-item reveal" href="https://aclanthology.org/2025.findings-naacl.292/" target="_blank">
+<div class="pub-year">2025</div>
+<div class="pub-info">
+<h3>Representation-to-Creativity (R2C): Automated Holistic Scoring Model for Essay Creativity <span class="pub-link-icon">↗</span></h3>
+<p><strong>Deokgi Kim</strong>, Joonyoung Jo, Byung-Won On, Ingyu Lee</p>
+</div>
+<div class="pub-venue">NAACL 2025 Findings</div>
+</a>
+<a class="pub-item reveal" href="https://aclanthology.org/2023.findings-acl.639/" target="_blank">
+<div class="pub-year">2023</div>
+<div class="pub-info">
+<h3>A Comparative Analysis of the Effectiveness of Rare Tokens on Creative Expression using ramBERT <span class="pub-link-icon">↗</span></h3>
+<p>Youbin Lee, <strong>Deokgi Kim</strong>, Byung-Won On, Ingyu Lee</p>
+</div>
+<div class="pub-venue">ACL 2023 Findings</div>
+</a>
+<a class="pub-item reveal" href="https://doi.org/10.14801/jkiit.2023.21.10.69" target="_blank">
+<div class="pub-year">2023</div>
+<div class="pub-info">
+<h3>Training Set Creation Method for Essay Creativity Score Prediction Models <span class="pub-link-icon">↗</span></h3>
+<p><strong>Deokgi Kim</strong>, Sangwoo Han, Seunghyeok Park, et al.</p>
+</div>
+<div class="pub-venue">Journal of KIIT</div>
+</a>
+</section><section class="contact" id="contact">
+<div class="section-label reveal">Contact</div>
+<div class="contact-content">
+<div class="contact-text">
+<h2 class="reveal">From research to models that ship.</h2>
+<p class="reveal">LLM post-training, domain adaptation, and applied NLP.</p>
+</div>
+<div class="contact-links reveal">
+<a class="contact-link" href="mailto:thekey1220@gmail.com">
+<span class="contact-link-label">Email</span>
+        thekey1220@gmail.com
+      </a>
+<a class="contact-link" href="https://github.com/Deok-gi" target="_blank">
+<span class="contact-link-label">GitHub</span>
+        github.com/Deok-gi
+      </a>
+<a class="contact-link" href="https://www.linkedin.com/in/deokgi-kim-b42aa82a4/" target="_blank">
+<span class="contact-link-label">LinkedIn</span>
+        linkedin.com/in/deokgi-kim
+      </a>
+</div>
+</div>
+</section>
+<!-- PROJECTS -->
+<!-- BUSINESS -->
+<!-- R&D -->
+<footer>
+<p>Updated Aug 2026</p>
+<p>Saltlux AI Labs · Seoul, Korea</p>
+</footer>
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+<!-- Certificate Lightbox -->
+</body>
+</html>
+
