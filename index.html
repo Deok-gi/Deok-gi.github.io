@@ -871,7 +871,7 @@
 <section class="hero" id="hero">
 <p class="hero-greeting">Deokgi Kim · LLM Post-training Engineer</p>
 <h1>Building LLMs that<br/>learn, reason —<br/><em>and ship.</em></h1>
-<p class="hero-desc">솔트룩스 AI Labs에서 자체 LLM <strong>LUXIA</strong> 시리즈의 데이터 설계부터 SFT·선호 최적화·distillation·평가까지 담당합니다. 학습 방법을 연구하는 데 그치지 않고 보험·원자력·교육·법률 도메인의 실제 제품으로 연결해 왔습니다.</p>
+<p class="hero-desc">솔트룩스 AI Labs에서 자체 LLM <strong>LUXIA</strong> 시리즈의 Data Curation부터 Post-training·Evaluation까지 담당합니다. 학습 방법을 연구하는 데 그치지 않고 보험·원자력·교육·법률 도메인의 실제 제품으로 연결해 왔습니다.</p>
 <div class="hero-links"><a class="primary" href="#experience">Experience</a><a href="#projects">Selected Work</a></div>
 </section><section class="experience" id="experience">
 <div class="section-label reveal">Experience</div>
@@ -887,7 +887,7 @@
 <h3>LLM Post-training Engineer</h3>
 <div class="exp-org">Saltlux AI Labs (솔트룩스)<span class="affil affil--industry">Industry</span></div>
 <p>자체 LLM <strong>LUXIA 1–4</strong>의 data curation → post-training → evaluation을 반복 개선하고, 보험·원자력·교육·법률 도메인 LLM을 고객 환경에 적용했습니다. 데이터와 학습 recipe를 직접 설계하며 연구 결과를 배포 가능한 모델로 만드는 데 집중합니다.</p>
-<div class="exp-tags"><span>LLM Training</span><span>Data Curation</span><span>Post-training</span><span>GRPO · MOPD</span><span>Evaluation</span><span>Domain LLM · RAG</span></div>
+<div class="exp-tags"><span>Data Curation</span><span>SFT · PEFT</span><span>GRPO</span><span>On-policy Distillation</span><span>Domain-specific LLM</span><span>Citation-grounded RAG</span></div>
 </div>
 </div>
 <div class="exp-item reveal">
@@ -900,71 +900,69 @@
 </div>
 </div>
 </section><section class="projects" id="projects">
-<div class="section-label reveal">Selected Work — Luxia LLM Series</div>
+<div class="section-label reveal">Selected Work — LUXIA LLM Series</div>
 
 <div aria-label="LUXIA model evolution" class="series-strip reveal">
-<div class="series-step"><strong>LUXIA 1</strong><span>Foundation</span><small>Leaderboard #1</small></div>
-<div class="series-step"><strong>LUXIA 2</strong><span>Production</span><small>8B · 32B</small></div>
-<div class="series-step"><strong>LUXIA 3</strong><span>Domain Agent</span><small>128K · Tool Use</small></div>
-<div class="series-step series-step--active"><strong>LUXIA 4</strong><span>MOPD · MoE</span><small>In Progress</small></div>
+<div class="series-step"><strong>LUXIA 1</strong><span>Alignment</span><small>SFT · Merging</small></div>
+<div class="series-step"><strong>LUXIA 2</strong><span>Data-Centric Scaling</span><small>Diversity · Reasoning</small></div>
+<div class="series-step"><strong>LUXIA 3</strong><span>Agentic Intelligence</span><small>Deep Research · Tool Use</small></div>
+<div class="series-step series-step--active"><strong>LUXIA 4</strong><span>Capability Integration</span><small>Multi-Teacher OPD</small></div>
 </div>
 <details class="project-card reveal compact-card">
 <summary><div class="project-header"><div class="project-title-area">
-<span class="project-period">LUXIA 1</span><h3>Foundation — 첫 자체 LLM</h3>
-<p class="project-subtitle">InternLM2-20B 기반 21.4B 모델에 SFT·DPO·model merging을 적용해 성능 균형을 맞추고, Open LLM Leaderboard 35B 이하 1위를 달성.</p>
+<span class="project-period">2023 — 2024 · LUXIA 1</span><h3>Alignment Foundation</h3>
+<p class="project-subtitle">SFT와 preference alignment를 적용하고, checkpoint별 강점을 model merging으로 결합해 LUXIA의 기본 post-training 체계를 확립.</p>
 </div><span class="project-badge" style="--badge-dot:#16A34A;">#1 under 35B</span></div></summary>
 <div class="project-body">
 <div class="case-grid">
-<div class="case-block"><div class="case-kicker">Challenge</div><p>DPO가 선호 품질을 높이는 동시에 GSM8K 등 일부 reasoning 성능을 떨어뜨리는 trade-off가 발생.</p></div>
-<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>Base model 선정 및 SFT/DPO pipeline 구성</li><li>Checkpoint별 능력 변화를 비교</li><li>Model merging으로 상충 능력 결합</li></ul></div>
-<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">Final Avg 78.14</span><span class="metric-pill">GSM8K SFT +9.93%p</span><span class="metric-pill">Leaderboard #1</span></div></div>
+<div class="case-block"><div class="case-kicker">Challenge</div><p>응답 품질을 개선하면서도 instruction following과 reasoning capability 사이의 균형을 유지해야 했습니다.</p></div>
+<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>SFT 및 preference alignment pipeline 구성</li><li>Checkpoint별 capability 변화 분석</li><li>Model merging을 통한 상충 능력 결합</li></ul></div>
+<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">Leaderboard #1 under 35B</span></div></div>
 </div>
 </div>
-<div class="project-result" style="--result-accent:#16A34A;--result-glow:rgba(22,163,74,.18);"><div class="result-text"><h4>Open LLM Leaderboard #1</h4><p>35B 이하 모델 부문 — 첫 자체 LLM의 학습·평가 루프 확립</p></div><a class="result-link" href="https://www.aitimes.com/news/articleView.html?idxno=158004" target="_blank">Press Coverage ↗</a></div>
+<div class="project-result" style="--result-accent:#16A34A;--result-glow:rgba(22,163,74,.18);"><div class="result-text"><h4>Open LLM Leaderboard #1</h4><p>35B 이하 모델 부문 — LUXIA의 alignment·evaluation recipe 확립</p></div><a class="result-link" href="https://www.aitimes.com/news/articleView.html?idxno=158004" target="_blank">Press Coverage ↗</a></div>
 </details>
 <details class="project-card reveal compact-card">
 <summary><div class="project-header"><div class="project-title-area">
-<span class="project-period">LUXIA 2</span><h3>Production — 데이터 다양성과 선호 품질</h3>
-<p class="project-subtitle">8B·32B 듀얼 모델을 출시하며 500K+ SFT 데이터와 ~20K preference data를 체계화하고, 실제 서비스에 적용.</p>
-</div><span class="project-badge" style="--badge-dot:#2563EB;">Production</span></div></summary>
+<span class="project-period">2024 — 2025 · LUXIA 2</span><h3>Data-Centric Scaling</h3>
+<p class="project-subtitle">일반 대화·지식·전문 도메인·수학·코딩·reasoning을 포괄하는 taxonomy와 합성·큐레이션 pipeline으로 데이터 다양성을 확장.</p>
+</div><span class="project-badge" style="--badge-dot:#2563EB;">Data Diversity</span></div></summary>
 <div class="project-body">
 <div class="case-grid">
-<div class="case-block"><div class="case-kicker">Focus</div><p>모델 크기보다 <strong>데이터 다양성·지시 이행·답변 품질</strong>을 안정적으로 확장하는 production recipe 구축.</p></div>
-<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>500K+ SFT samples, 150+ domain taxonomy 구성</li><li>~20K preference data와 4축 DPO 설계</li><li>8B/32B 모델을 동일 평가 체계로 반복 개선</li></ul></div>
+<div class="case-block"><div class="case-kicker">Focus</div><p>모델 규모보다 <strong>capability coverage·instruction diversity·데이터 균형</strong>을 중심으로 post-training 성능을 확장.</p></div>
+<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>500K+ SFT 데이터 큐레이션·합성</li><li>150+ domain·task taxonomy 설계</li><li>Reasoning을 포함한 capability mix 구성</li></ul></div>
 <div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">500K+ SFT</span><span class="metric-pill">150+ Domains</span><span class="metric-pill">8B · 32B Deployed</span></div></div>
-<div class="generation-note"><strong>Reasoning capability expansion</strong><p>Complex Reasoning 데이터와 pre/post-train taxonomy를 확장해 수학 추론 성능을 강화하고 <strong>MATH-500 +44%p</strong>를 달성.</p></div>
 </div>
 </div>
-<div class="project-result" style="--result-accent:#2563EB;--result-glow:rgba(37,99,235,.18);"><div class="result-text"><h4>Production LLM Series</h4><p>데이터 설계와 preference optimization을 제품 수준의 반복 학습 체계로 확장</p></div></div>
+<div class="project-result" style="--result-accent:#2563EB;--result-glow:rgba(37,99,235,.18);"><div class="result-text"><h4>Data Diversity at Scale</h4><p>대규모 taxonomy 기반 데이터 설계를 8B·32B 모델 학습 체계로 확장</p></div></div>
 </details>
 <details class="project-card reveal compact-card">
 <summary><div class="project-header"><div class="project-title-area">
-<span class="project-period">LUXIA 3</span><h3>Vertical Domain Agent</h3>
-<p class="project-subtitle">전문 도메인 데이터, tool use, long-context를 함께 확장해 법률·특허·연구 업무에 맞춘 agentic LLM으로 진화.</p>
-</div><span class="project-badge" style="--badge-dot:#0EA5E9;">Deployed</span></div></summary>
+<span class="project-period">2025 — 2026 · LUXIA 3</span><h3>Agentic Intelligence</h3>
+<p class="project-subtitle">검색·도구 호출·장문 문서 분석·근거 인용을 결합해 복합적인 지식 업무를 수행하는 Deep Research·Agentic AI로 확장.</p>
+</div><span class="project-badge" style="--badge-dot:#0EA5E9;">Deep Research</span></div></summary>
 <div class="project-body">
 <div class="case-grid">
-<div class="case-block"><div class="case-kicker">Focus</div><p>일반 대화 성능을 유지하면서 전문 지식·multi-doc RAG·tool use·long-context 능력을 한 모델에 통합.</p></div>
-<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>Patent/Legal 중심 도메인 데이터 비중 확대</li><li>Agent·Tool Use·Long-context post-training 데이터 확장</li><li>Deep-Think reasoning 데이터 강화 및 평가 루프 운영</li></ul></div>
-<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">1.18M Post-train</span><span class="metric-pill">128K Context</span><span class="metric-pill">MMLU 87.50</span><span class="metric-pill">Ko-IFEval 83.63</span></div></div>
-<div class="generation-note"><strong>Reasoning &amp; distillation</strong><p>Deep-Think reasoning과 instruction following 데이터를 강화하고, on-policy distillation을 후속 post-training 전략으로 검증.</p></div>
+<div class="case-block"><div class="case-kicker">Focus</div><p>모델 내부 지식만으로 답하는 방식에서 벗어나 외부 정보와 도구를 활용하는 <strong>multi-step agentic workflow</strong>를 구축.</p></div>
+<div class="case-block"><div class="case-kicker">What I did</div><ul class="case-points"><li>Deep Research·multi-step task 데이터 설계</li><li>Single·Parallel Tool Calling 데이터 구축</li><li>Long-context·Citation-grounded RAG 확장</li></ul></div>
+<div class="case-block"><div class="case-kicker">Outcome</div><div class="metric-row"><span class="metric-pill">1.18M Post-train</span><span class="metric-pill">128K Context</span><span class="metric-pill">Tool-use Training</span></div></div>
 </div>
 </div>
-<div class="project-result" style="--result-accent:#0EA5E9;--result-glow:rgba(14,165,233,.18);"><div class="result-text"><h4>Domain Agent — Deployed</h4><p>전문 도메인과 agentic capability를 실제 production model에 통합</p></div></div>
+<div class="project-result" style="--result-accent:#0EA5E9;--result-glow:rgba(14,165,233,.18);"><div class="result-text"><h4>From Answering to Acting</h4><p>검색·분석·도구 호출·근거 인용을 하나의 agentic workflow로 연결</p></div></div>
 </details>
 <details class="project-card reveal compact-card">
 <summary><div class="project-header"><div class="project-title-area">
-<span class="project-period">LUXIA 4 · IN PROGRESS</span><h3>MOPD &amp; MoE Upcycling</h3>
-<p class="project-subtitle">31B student에 domain-specialist teacher의 역량을 통합하는 MOPD와, 별도 Dense → ~80B MoE upcycling 트랙을 병행.</p>
-</div><span class="project-badge" style="--badge-dot:#A855F7;">MOPD · MoE</span></div></summary>
+<span class="project-period">2026 — PRESENT · LUXIA 4</span><h3>Capability Integration</h3>
+<p class="project-subtitle">Capability별 specialist teacher의 전문성을 하나의 31B student에 통합하는 Multi-Teacher On-Policy Distillation을 진행.</p>
+</div><span class="project-badge" style="--badge-dot:#A855F7;">MOPD · In Progress</span></div></summary>
 <div class="project-body">
 <div class="case-grid">
-<div class="case-block"><div class="case-kicker">Track A · 31B</div><p><strong>Multi-Teacher On-Policy Distillation</strong>로 domain-specialist teacher들의 capability를 하나의 student에 통합하는 post-training을 진행 중.</p></div>
-<div class="case-block"><div class="case-kicker">Track B · ~80B</div><p>Dense 모델을 Mixture-of-Experts로 upcycling하고 recovery pre-training으로 base distribution을 복원하는 확장 실험을 진행.</p></div>
-<div class="case-block"><div class="case-kicker">Goal</div><div class="metric-row"><span class="metric-pill">31B MOPD</span><span class="metric-pill">Multi-Teacher</span><span class="metric-pill">Dense → MoE ~80B</span></div></div>
+<div class="case-block"><div class="case-kicker">Problem</div><p>Capability별 순차 학습에서 발생하는 성능 저하와 multi-domain optimization conflict를 최소화해야 합니다.</p></div>
+<div class="case-block"><div class="case-kicker">What I do</div><ul class="case-points"><li>GRPO 기반 specialist teacher 구성</li><li>Student on-policy rollout·teacher supervision 연결</li><li>Reverse KL 기반 token-level alignment</li></ul></div>
+<div class="case-block"><div class="case-kicker">Status</div><div class="metric-row"><span class="metric-pill">31B Student</span><span class="metric-pill">Specialist RL</span><span class="metric-pill">Multi-Teacher OPD</span></div></div>
 </div>
 </div>
-<div class="project-result" style="--result-accent:#A855F7;--result-glow:rgba(168,85,247,.18);"><div class="result-text"><h4>Next-generation Post-training</h4><p>Capability integration과 model upcycling을 두 개의 독립 트랙으로 검증 중</p></div></div>
+<div class="project-result" style="--result-accent:#A855F7;--result-glow:rgba(168,85,247,.18);"><div class="result-text"><h4>From Specialization to Integration</h4><p>독립적으로 강화된 specialist capability를 하나의 generalist student로 통합</p></div></div>
 </details>
 </section><section class="projects" id="business">
 <div class="section-label reveal">Domain LLM — Production &amp; Delivery</div>
