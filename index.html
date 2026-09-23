@@ -4,8 +4,23 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#FBFBF9" id="theme-color" name="theme-color"/>
 <title>Deokgi Kim — AI Research Engineer</title>
 <meta content="LLM data curation, post-training, evaluation과 Agentic AI를 개발하는 김덕기의 포트폴리오입니다." name="description"/>
+<script>
+  (() => {
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const initialTheme = savedTheme || systemTheme;
+      document.documentElement.dataset.theme = initialTheme;
+      document.getElementById('theme-color').setAttribute('content', initialTheme === 'dark' ? '#111113' : '#FBFBF9');
+    } catch (_) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -24,6 +39,30 @@
     --green: #15803D;
     --red: #B91C1C;
     --ink: #16161A;
+    --nav-bg: rgba(251,251,249,0.78);
+    --shadow-soft: rgba(0,0,0,0.06);
+    --shadow-medium: rgba(0,0,0,0.12);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #111113;
+    --bg-deep: #17171A;
+    --text: #F2F2EF;
+    --text-secondary: #B0B0B5;
+    --text-tertiary: #777780;
+    --accent: #F2F2EF;
+    --border: #303036;
+    --border-soft: #25252A;
+    --highlight: #A69CFF;
+    --highlight-soft: rgba(166,156,255,0.13);
+    --card-bg: #19191C;
+    --tag-bg: #242428;
+    --green: #4ADE80;
+    --red: #FB7185;
+    --nav-bg: rgba(17,17,19,0.8);
+    --shadow-soft: rgba(0,0,0,0.28);
+    --shadow-medium: rgba(0,0,0,0.42);
+    color-scheme: dark;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,19 +77,20 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.005em;
+    transition: background-color 0.28s ease, color 0.28s ease;
   }
 
-  ::selection { background: var(--ink); color: var(--bg); }
+  ::selection { background: var(--text); color: var(--bg); }
 
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     padding: 1.5rem 3rem;
     display: flex; justify-content: space-between; align-items: center;
-    background: rgba(251,251,249,0.72);
+    background: var(--nav-bg);
     backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
     border-bottom: 1px solid transparent;
-    transition: border-color 0.5s, padding 0.4s;
+    transition: border-color 0.5s, padding 0.4s, background-color 0.28s ease;
   }
   nav.scrolled { border-bottom-color: var(--border); padding: 1.1rem 3rem; }
 
@@ -61,6 +101,7 @@
     transition: opacity 0.3s;
   }
   .nav-logo:hover { opacity: 0.6; }
+  .nav-actions { display:flex; align-items:center; gap:1.4rem; }
   .nav-links { display: flex; gap: 2.5rem; }
   .nav-links a {
     font-size: 0.72rem; text-decoration: none; color: var(--text-secondary);
@@ -73,6 +114,19 @@
   }
   .nav-links a:hover { color: var(--text); }
   .nav-links a:hover::after { width: 100%; }
+
+  .theme-toggle {
+    width: 38px; height: 38px; border: 1px solid var(--border); border-radius: 50%;
+    background: var(--card-bg); color: var(--text); display: inline-flex;
+    align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;
+    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+  }
+  .theme-toggle:hover { border-color: var(--text-tertiary); transform: translateY(-1px); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--highlight); outline-offset: 3px; }
+  .theme-icon { width: 17px; height: 17px; }
+  .theme-icon--sun { display: none; }
+  :root[data-theme="dark"] .theme-icon--sun { display: block; }
+  :root[data-theme="dark"] .theme-icon--moon { display: none; }
 
   section { padding: 0 3rem; }
 
@@ -240,7 +294,7 @@
   .research-card:hover::before { transform: scaleX(1); }
   .research-card:hover {
     border-color: transparent;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.06); transform: translateY(-4px);
+    box-shadow: 0 8px 40px var(--shadow-soft); transform: translateY(-4px);
   }
   .research-icon {
     width: 48px; height: 48px; border-radius: 12px;
@@ -268,12 +322,12 @@
   }
   details.project-card:not([open]):hover {
     border-color: var(--text-tertiary);
-    box-shadow: 0 12px 40px -12px rgba(0,0,0,0.10);
+    box-shadow: 0 12px 40px -12px var(--shadow-medium);
     transform: translateY(-2px);
   }
   details.project-card[open] {
     border-color: var(--text-tertiary);
-    box-shadow: 0 16px 50px -16px rgba(0,0,0,0.12);
+    box-shadow: 0 16px 50px -16px var(--shadow-medium);
   }
 
   .project-header {
@@ -662,7 +716,7 @@
   }
   .result-link:hover {
     background: #fff;
-    color: var(--text);
+    color: #16161A;
   }
 
   /* PUBLICATIONS */
@@ -753,6 +807,7 @@
     section { padding: 0 1.5rem; }
     nav { padding: 1.2rem 1.5rem; }
     .nav-links { display: none; }
+    .nav-actions { gap:0; }
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
     .about-stats { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1rem; }
     .about-stats > div { padding-right: 0; }
@@ -817,6 +872,24 @@
   .series-step--mid { background:var(--bg-deep); }
   .series-step--active { border-color:var(--text-tertiary); box-shadow:0 8px 26px -18px rgba(0,0,0,.25); }
 
+  :root[data-theme="dark"] .affil--academic { background:rgba(74,222,128,0.12); }
+  :root[data-theme="dark"] .bench-table .highlight-row td { background:rgba(166,156,255,0.08); }
+  :root[data-theme="dark"] .issue-box { background:#3A2B12; }
+  :root[data-theme="dark"] .issue-box strong { color:#FBBF24; }
+  :root[data-theme="dark"] .resolve-box { background:#0F2F24; }
+  :root[data-theme="dark"] .resolve-box strong { color:#6EE7B7; }
+  :root[data-theme="dark"] .project-result { background:#0B0B0D; }
+  :root[data-theme="dark"] .series-step--active { box-shadow:0 8px 26px -18px var(--shadow-medium); }
+
+  @media (prefers-reduced-motion: reduce) {
+    body, nav, .theme-toggle { transition:none; }
+  }
+
+  @media (max-width: 880px) {
+    .nav-links { display:none; }
+    .nav-actions { gap:0; }
+  }
+
   .compact-card .project-header { padding-top:2rem; padding-bottom:1.65rem; }
   .compact-card .project-title-area h3 { font-size:1.75rem; }
   .compact-card .project-body { padding-top:.5rem; }
@@ -866,7 +939,13 @@
 <body>
 <nav id="nav">
 <a class="nav-logo" href="#">Deokgi Kim.</a>
+<div class="nav-actions">
 <div class="nav-links"><a href="#experience">Experience</a><a href="#projects">LUXIA</a><a href="#business">Domain LLM</a><a href="#agentic">Agentic AI</a><a href="#publications">Publications</a><a href="#contact">Contact</a></div>
+<button aria-label="다크 모드로 전환" class="theme-toggle" id="theme-toggle" title="다크 모드로 전환" type="button">
+<svg aria-hidden="true" class="theme-icon theme-icon--moon" fill="none" viewBox="0 0 24 24"><path d="M20.4 15.2A8.5 8.5 0 0 1 8.8 3.6 8.5 8.5 0 1 0 20.4 15.2Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/></svg>
+<svg aria-hidden="true" class="theme-icon theme-icon--sun" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5V5M12 19v2.5M21.5 12H19M5 12H2.5M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8M18.7 18.7l-1.8-1.8M7.1 7.1 5.3 5.3" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"/></svg>
+</button>
+</div>
 </nav>
 <section class="hero" id="hero">
 <p class="hero-greeting">Deokgi Kim · AI Research Engineer</p>
@@ -1093,6 +1172,30 @@
 </footer>
 <script>
   const nav = document.getElementById('nav');
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeColor = document.getElementById('theme-color');
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const applyTheme = (theme) => {
+    document.documentElement.dataset.theme = theme;
+    const isDark = theme === 'dark';
+    const label = isDark ? '라이트 모드로 전환' : '다크 모드로 전환';
+    themeToggle.setAttribute('aria-label', label);
+    themeToggle.setAttribute('title', label);
+    themeToggle.setAttribute('aria-pressed', String(isDark));
+    themeColor.setAttribute('content', isDark ? '#111113' : '#FBFBF9');
+  };
+
+  applyTheme(document.documentElement.dataset.theme || 'light');
+  themeToggle.addEventListener('click', () => {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', nextTheme);
+    applyTheme(nextTheme);
+  });
+  systemTheme.addEventListener('change', (event) => {
+    if (!localStorage.getItem('theme')) applyTheme(event.matches ? 'dark' : 'light');
+  });
+
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 50);
   });
